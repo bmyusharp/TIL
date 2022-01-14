@@ -24,7 +24,7 @@ print(samples)
 
 그래서 리스트에 값들을 추가하는 방법을 몰랐기 때문에 구글에서 '리스트 원소 추가'를 검색했습니다.
 
-![newbe_random-01](C:\Users\1004r\Desktop\TIL\python.assets\newbe_random-01.jpg)
+![newbe_random-01](C:\Users\1004r\Desktop\TIL\python\python_random.assets\newbe_random-01.jpg)
 
 
 
@@ -60,7 +60,7 @@ print(sorted(lotto_number)) #sorted() 추가되었음
 
 단순히 세 번 choice하는 것으로는 마음에 들지 않아서 찾아보려고 했는데...
 
-![newbe_random-02](C:\Users\1004r\Desktop\TIL\python.assets\newbe_random-02.jpg)
+![newbe_random-02](C:\Users\1004r\Desktop\TIL\python\python_random.assets\newbe_random-02.jpg)
 
 
 
@@ -83,7 +83,7 @@ for i in range(3):
 print(slot_machine)
 ```
 
-![newbe_random-03](C:\Users\1004r\Desktop\TIL\python.assets\newbe_random-03.jpg)
+![newbe_random-03](C:\Users\1004r\Desktop\TIL\python\python_random.assets\newbe_random-03.jpg)
 
 
 
@@ -111,7 +111,7 @@ while이 조건이 만족이라는 가정 하에 계속 반복되고, 일정 조
 
 결과는...
 
-![newbe_random-04](C:\Users\1004r\Desktop\TIL\python.assets\newbe_random-04.jpg)
+![newbe_random-04](C:\Users\1004r\Desktop\TIL\python\python_random.assets\newbe_random-04.jpg)
 
 
 
@@ -125,13 +125,11 @@ while이 조건이 만족이라는 가정 하에 계속 반복되고, 일정 조
         break
 ```
 
-![newbe_random-05](C:\Users\1004r\Desktop\TIL\python.assets\newbe_random-05.jpg)
+![newbe_random-05](C:\Users\1004r\Desktop\TIL\python\python_random.assets\newbe_random-05.jpg)
 
 
 
-첫 시도만에 금방 나오길래 이상함을 느꼈지만 몇 번의 시도를 더 해본 끝에
-
-200회~400회 정도에서 뽑기도 하고 많으면 1700번까지도 시도해야 되기도 합니다.
+첫 실행인데 금방 나오길래 이상함을 느꼈지만 몇 번의 시도를 더 해본 끝에 200회~400회 정도에서 뽑기도 하고 많으면 1700번까지도 시도해야 되기도 합니다. 당분간은 뽑기 하지 말아야겠네요.
 
 
 
