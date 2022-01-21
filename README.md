@@ -16,9 +16,13 @@
 
     조건문 if와 반복문 for/while, 그리고 .append() 메서드와 enumerate() 함수 그리고 주피터노트북 설치 및 주요 단축키를 정리하였습니다.
 
-3. [review control statement](https://github.com/bmyusharp/TIL/blob/master/python/review%20control%20statement.md)
+ 3. [review control statement](https://github.com/bmyusharp/TIL/blob/master/python/review%20control%20statement.md)
 
    과거에 배운 for / if를 사용해 최댓값 구하기, 언급횟수 구하기, 단어 뒤집기 등을 풀었습니다. 구글링하다 오히려 꼬이게 될 수도 있다는 것을 알았습니다.
+
+ 4. [function input output.md](https://github.com/bmyusharp/TIL/blob/master/python/function%20input%20output.md)
+
+    기본적인 함수 활용에 대해서 배웠습니다. 함수의 문법, Input(parameter)과 Output(return), 그리고 함수를 사용하는 이유는 같은 코드를 재사용하기 위해서 입니다.
 
 ### - [git](./git)
 
