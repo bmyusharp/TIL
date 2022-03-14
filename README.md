@@ -52,3 +52,7 @@
 1. [SQL](./SQL%20ORM/SQL%20CRUD.md)
 
    SQL 기본 문법 (CRUD)
+
+2. [SQL More](./SQL%20ORM/SQL2.md)
+
+   SQL 기본 문법 (WHERE(조건문), Aggregate Function(집계함수), LIKE(와일드카드), ORDER BY(정렬), GROUP BY(요약 행 집합 생성), ALTER TABLE(테이블 조작))
