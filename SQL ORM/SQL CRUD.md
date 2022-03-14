@@ -2,7 +2,7 @@
 
 ...
 
-```sqlite
+```sql
 SELECT * FROM examples;
 ```
 
@@ -10,7 +10,7 @@ Run Query / Run Selected Query (블록으로 선택한 부분만)
 
 -> 어떤 데이터베이스에서 실행할지에 대한 선택지가 나옴.
 
-```sqlite
+```sql
 CREATE TABLE classmates ( -- 테이블 이름: classmates
 	id INTEGER PRIMARY KEY, -- id가 INTEGER형식의 pk가 됨
     name TEXT -- name이라는 TEXT형식의 key 생성
@@ -25,7 +25,7 @@ CREATE TABLE classmates ( -- 테이블 이름: classmates
 
 - .schema 명령어: 스키마 출력 (보기 좋은 출력형태는 아님)
 
-```sqlite
+```sql
 DROP TABLE classmates; -- 테이블 삭제
 -- 왼쪽 익스플로러에서 리프레쉬(f5같은거) 누르면 반영 됨
 ```
@@ -40,7 +40,7 @@ DROP TABLE classmates; -- 테이블 삭제
 
 - address-TEXT
 
-```sqlite
+```sql
 CREATE TABLE
 classmates (
 	name TEXT,
@@ -63,17 +63,17 @@ classmates (
 
 ​	**INSERT는 특정 테이블에 레코드(행)를 삽입(생성)!**
 
-```sqlite
+```sql
 INSERT INTO 테이블이름 (컬럼1, 컬럼2, ...) VALUES (값1, 값2, ...);
 ```
 
-```sqlite
+```sql
 INSERT INTO classmates (name, age) VALUES ('홍길동', 23);
 ```
 
 **(쉘에서) SELECT를 사용해 확인 (`Read` 역할)**
 
-```
+```sql
 sqlite> SELECT * FROM classmates;
 ```
 
@@ -83,7 +83,7 @@ sqlite> SELECT * FROM classmates;
 
 **모든 열에 데이터가 있을 경우 column을 명시하지 않아도 됨!**
 
-```sqlite
+```sql
 INSERT INTO classmates VALUES ('홍길동', 23, '서울');
 ```
 
@@ -97,7 +97,7 @@ INSERT INTO classmates VALUES ('홍길동', 23, '서울');
 
    - 지우고 새로 만들기
 
-```sqlite
+```sql
 DROP TABLE classmates;
 CREATE TABLE
 classmates (
@@ -116,7 +116,7 @@ classmates (
 
 - 방법 2: 각 벨류에 맞는 컬럼들을 명시적으로 작성
 
-```sqlite
+```sql
 INSERT INTO classmates (name, age, address) VALUES ('홍길동', 23, '서울');
 ```
 
@@ -126,7 +126,7 @@ INSERT INTO classmates (name, age, address) VALUES ('홍길동', 23, '서울');
 
 복수 행(여러 줄) 입력방법
 
-```sqlite
+```sql
 INSERT INTO classmates 
 VALUES
 ('홍길동', 30, '서울'), -- ,(콤마로 계속해서 입력가능하다는 것)
@@ -184,14 +184,14 @@ SQLite에서 가장 복잡한 문임.
 
 
 
-```sqlite
+```sql
 SELECT * FROM 테이블이름; --전체 테이블 조회
 SELECT 컬럼1, 컬럼2, ... FROM 테이블이름; --특정 컬럼만 조회
 ```
 
 e.g. classmates 테이블에서 id, name 컬럼 값만 조회하세요.
 
-```sqlite
+```sql
 SELECT rowid, name FROM classmates;
 ```
 
@@ -203,7 +203,7 @@ SELECT rowid, name FROM classmates;
 
 e.g. classmates 테이블에서 id, name 컬럼 값을 하나만 조회하세요.
 
-```sqlite
+```sql
 SELECT rowid, name FROM classmates LIMIT 1;
 ```
 
@@ -217,7 +217,7 @@ e.g. 특정 부분에서 원하는 수 만큼 데이터 조회하기
 
 classmates 테이블에서 id, name 컬럼 값을 세 번째에 있는 하나만 조회하세요.
 
-```sqlite
+```sql
 SELECT rowid, name FROM classmates LIMIT 1 OFFSET 2; --0,1,2라서 세번째는 2
 ```
 
@@ -227,7 +227,7 @@ SELECT rowid, name FROM classmates LIMIT 1 OFFSET 2; --0,1,2라서 세번째는 
 
 e.g. classmates 테이블에서 id, name 컬럼 값 중에 주소가 서울인 경우의 데이터를 조회하세요.
 
-```sqlite
+```sql
 SELECT rowid, name FROM classmates WHERE address = '서울';
 ```
 
@@ -237,7 +237,7 @@ SELECT rowid, name FROM classmates WHERE address = '서울';
 
 e.g. classmates 테이블에서 age값 전체를 중복없이 조회하세요.
 
-```sqlite
+```sql
 SELECT DISTINCT age FROM classmates;
 ```
 
@@ -247,7 +247,7 @@ SELECT DISTINCT age FROM classmates;
 
 ## DELETE
 
-```sqlite
+```sql
 DELETE FROM 테이블이름 WHERE 조건;
 ```
 
@@ -259,7 +259,7 @@ DELETE FROM 테이블이름 WHERE 조건;
 
 e.g. classmates 테이블에 id가 5인 레코드를 삭제하세요.
 
-```sqlite
+```sql
 DELETE FROM classmates WHERE rowid = 5;
 ```
 
@@ -271,7 +271,7 @@ DELETE FROM classmates WHERE rowid = 5;
 
 ​	데이터를 다시 추가해서 확인해보자
 
-```sqlite
+```sql
 INSERT INTO classmates VALUES ('최전자', 28, '부산');
 SELECT rowid, * FROM classmates;
 ```
@@ -317,7 +317,7 @@ SET clause에서 테이블의 각 열에 대해 새로운 값을 설정
 
 e.g. classmates 테이블에 id가 5인 레코드를 수정하세요. 이름을 홍길동으로, 주소를 제주도로 바꿔주세요!
 
-```sqlite
+```sql
 UPDATE classmates
 SET name='홍길동', address='제주도'
 WHERE rowid = 5;

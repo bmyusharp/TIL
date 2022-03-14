@@ -1,6 +1,6 @@
 ## WHERE
 
-```sqlite
+```sql
 CREATE TABLE users(
 	first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
@@ -38,7 +38,7 @@ sqlite .tables
 
   - users 테이블의 레코드 총 개수를 조회하려면?
 
-    ```sqlite
+    ```sql
     SELECT COUNT(*) FROM users;
     ```
 
@@ -46,17 +46,17 @@ sqlite .tables
 
   - 위 함수들은 해당 (컬럼)이 숫자(INTEGER)일 때만 사용 가능
 
-    ```sqlite
+    ```sql
     SELECT AVG(age) FROM users WHERE age >= 30; 
     -- 30살 이상인 사람들의 나이 평균
     ```
 
-    ```sqlite
+    ```sql
     SELECT first_name, MAX(balance) FROM users; 
     -- 계좌 잔액이 가장 높은 사람
     ```
 
-    ```sqlite
+    ```sql
     SELECT AVG(balance) FROM users WHERE age >= 30; 
     -- 30살 이상인 사람들의 계좌 평균 잔액
     ```
@@ -85,14 +85,14 @@ sqlite .tables
 
 e.g. users 테이블에서 나이가 20대인 사람만 조회한다면?
 
-```sqlite
+```sql
 SELECT * FROM users WHERE age LIKE '2_';
 -- 2로 시작하는 두 자릿수 값을 조회
 ```
 
 e.g. users 테이블에서 지역번호가 02인 사람만 조회한다면?
 
-```sqlite
+```sql
 SELECT * FROM users WHERE phone LIKE '02-%';
 -- 02-로 시작하는 전화번호를 조회
 -- 02% 대신 02-%를 이용하는 이유는, 023으로 시작하는 번호 같은 예외를 잡아내기 위해서
@@ -114,7 +114,7 @@ SELECT 문에 추가하여 사용
 
 특정 컬럼을 기준으로 데이터를 정렬해서 조회하기
 
-```sqlite
+```sql
 SELECT * FROM 테이블 ORDER BY 컬럼1, 컬럼2, ... DESC; -- (또는 ASC)
 ```
 
@@ -122,7 +122,7 @@ SELECT * FROM 테이블 ORDER BY 컬럼1, 컬럼2, ... DESC; -- (또는 ASC)
 
 e.g. users에서 나이 순으로 오름차순 정렬하여 상위 10개만 조회한다면?
 
-```sqlite
+```sql
 SELECT * FROM users ORDER BY age ASC LIMIT 10; 
 -- 상위 10개 = LIMIT 10
 ```
@@ -131,7 +131,7 @@ SELECT * FROM users ORDER BY age ASC LIMIT 10;
 
 e.g. 나이순, 성 순으로 오름차순 정렬하여 상위 10개만 조회한다면?
 
-```sqlite
+```sql
 SELECT * FROM users 
 ORDER BY age, last_name ASC
 LIMIT 10;
@@ -143,7 +143,7 @@ LIMIT 10;
 
 e.g. 계좌 잔액 순으로 내림차순 정렬하여 해당 유저의 성과 이름을 10개만 조회한다면?
 
-```sqlite
+```sql
 SELECT last_name, first_name 
 -- 최종적으로 원하는 컬럼들은 보통 문제 마지막에 나옴(한글 서순으로 인하여)
 FROM users 
@@ -174,7 +174,7 @@ e.g. users에서 각 성(last_name)씨가 몇 명씩 있는지 조회한다면?
 
 (김씨 인원 수 n명, 이씨 인원 수 m명, 박씨 인원수 o명....)
 
-```sqlite
+```sql
 SELECT last_name, COUNT(*) 
 FROM users GROUP BY last_name;
 -- 아예 다른 컬럼이 출력됨 (테이블이 새로 생긴 것은 아님.)
@@ -189,7 +189,7 @@ FROM users GROUP BY last_name;
 
 Q. title과 content라는 컬럼을 가진 articles라는 이름의 table을 새롭게 만들어보세요! 두 컬럼 모두 비어있으면 안되며, rowid를 사용합니다.
 
-```sqlite
+```sql
 CREATE TABLE articles (
 	title TEXT NOT NULL,
     context TEXT NOT NULL
@@ -198,7 +198,7 @@ CREATE TABLE articles (
 
 Q. articles 테이블에 값을 추가해보세요!
 
-```sqlite
+```sql
 INSERT INTO articles
 VALUES ('1번제목', '1번내용');
 ```
@@ -217,7 +217,7 @@ VALUES ('1번제목', '1번내용');
 4. drop column (column 삭제, 3.35버전에 추가됨, 우리 버전: 3.38)
    - PK가 아니어야 함.
 
-```sqlite
+```sql
 -- 테이블 이름 변경
 ALTER TABLE 테이블이름
 RENAME TO 새로운테이블이름;
@@ -245,7 +245,7 @@ DROP COLUMN 컬럼이름;
 
 - **`DEFAULT`** 기본 값 추가하기
 
-```sqlite
+```sql
 ALTER TABLE news
 ADD COLUMN subtitle TEXT NOT NULL
 DEFAULT '소제목'; 
