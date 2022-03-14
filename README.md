@@ -30,8 +30,25 @@
 
     두 수의 최대공약수를 구하는 유클리드 호제법 알고리즘에 대하여 배웠습니다.
 
+### - [WEB / CSS](./WEB%20CSS)
+
+1. [HTML basics](./WEB%20CSS/HTML%20basics.md)
+
+   HTML의 구조와 기본적인 태그들을 다뤘습니다.
+
+2. [CSS basics](./WEB%20CSS/CSS%20basics.md)
+
+   CSS에서의 선택자 우선순위, 상속에 대해 배웠습니다.
+
 ### - [git](./git)
 
 ### - [etc](./etc)
 
 ### - [git.assets](./git.assets)
+
+### - Django
+### - [SQL / ORM](./SQL%20ORM)
+
+1. [SQL](./SQL%20ORM/SQL%20CRUD.md)
+
+   SQL 기본 문법 (CRUD)
