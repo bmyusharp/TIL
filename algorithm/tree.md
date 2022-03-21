@@ -117,7 +117,7 @@ def preorder_traverse(T): #전위순회
 
 
 
-- **중위 순회(preorder traversal)**
+- **중위 순회(inorder traversal)**
   - 수행 방법
     1. 현재 노드 n의 왼쪽 서브트리로 이동한다. -> L
     2. 현재 노드 n을 방문하여 처리한다. -> V
