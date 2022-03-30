@@ -30,6 +30,18 @@
 
     두 수의 최대공약수를 구하는 유클리드 호제법 알고리즘에 대하여 배웠습니다.
 
+1. [list](./algorithm/list-1%20and%20list-2.md)
+
+​		1차원, 2차원 배열을 사용해 문제를 해결합니다.
+
+2. [tree](./algorithm/tree.md)
+
+​		트리 구조를 사용, 탐색하여 문제를 해결합니다.
+
+3. [computational thinking](./algorithm/computational%20thinking.md)
+
+​		프로그래밍 사고를 위한 기본적인 논리학습
+
 ### - [WEB / CSS](./WEB%20CSS)
 
 1. [HTML basics](./WEB%20CSS/HTML%20basics.md)
@@ -41,6 +53,9 @@
    CSS에서의 선택자 우선순위, 상속에 대해 배웠습니다.
 
 ### - [git](./git)
+
+1. [what is git](./git/what_is_git.md)
+2. [branch & merge](./git/branch%20&%20merge.md)
 
 ### - [etc](./etc)
 
