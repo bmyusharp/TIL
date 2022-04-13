@@ -77,7 +77,7 @@ INSERT INTO classmates (name, age) VALUES ('홍길동', 23);
 sqlite> SELECT * FROM classmates;
 ```
 
-![image-20220314100438280](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220314100438280.png)
+![image-20220314100438280](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220314100438280.png)
 
 우클릭-Run Query로도 확인 가능함
 
@@ -195,7 +195,7 @@ e.g. classmates 테이블에서 id, name 컬럼 값만 조회하세요.
 SELECT rowid, name FROM classmates;
 ```
 
-![image-20220314103730185](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220314103730185.png)
+![image-20220314103730185](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220314103730185.png)
 
 
 
@@ -207,7 +207,7 @@ e.g. classmates 테이블에서 id, name 컬럼 값을 하나만 조회하세요
 SELECT rowid, name FROM classmates LIMIT 1;
 ```
 
-![image-20220314103858217](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220314103858217.png)
+![image-20220314103858217](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220314103858217.png)
 
 
 
@@ -241,7 +241,7 @@ e.g. classmates 테이블에서 age값 전체를 중복없이 조회하세요.
 SELECT DISTINCT age FROM classmates;
 ```
 
-![image-20220314104718460](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220314104718460.png)
+![image-20220314104718460](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220314104718460.png)
 
 
 
@@ -263,7 +263,7 @@ e.g. classmates 테이블에 id가 5인 레코드를 삭제하세요.
 DELETE FROM classmates WHERE rowid = 5;
 ```
 
-![image-20220314110554023](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220314110554023.png)
+![image-20220314110554023](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220314110554023.png)
 
 - 삭제하고 나서
 
@@ -276,7 +276,7 @@ INSERT INTO classmates VALUES ('최전자', 28, '부산');
 SELECT rowid, * FROM classmates;
 ```
 
-![image-20220314110821550](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220314110821550.png)
+![image-20220314110821550](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220314110821550.png)
 
 ​	5를 재활용했다... (Django Model때와는 다름)
 
@@ -325,7 +325,7 @@ WHERE rowid = 5;
 SELECT rowid, * FROM classmates; --조회
 ```
 
-![image-20220314112507442](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220314112507442.png)
+![image-20220314112507442](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220314112507442.png)
 
 
 

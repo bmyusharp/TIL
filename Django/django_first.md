@@ -88,11 +88,7 @@ pjt (프로젝트명)
 
 LANGUAGE_CODE 부터 USE_TZ 까지의 5줄 설정 해주기
 
-![image-20220303092426488](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220303092426488.png)
-
-
-
-
+![image-20220303092426488](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220303092426488.png)
 
 
 
@@ -112,7 +108,7 @@ articles (앱 이름)
 
 **앱을 만들고 나면, settings.py에서 앱 등록하기**
 
-![Image Pasted at 2022-3-3 09-27](C:\Users\1004r\Downloads\Image Pasted at 2022-3-3 09-27.png)
+![image-20220303092639739](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220303092639739.png)
 
 
 
@@ -195,7 +191,7 @@ def index(request):
 <h2>{{ lunch_menu }} 이거 먹어!</h2>
 ```
 
-![image-20220303095753085](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220303095753085.png)
+![image-20220303095748200](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220303095748200.png)
 
 전체적 과정
 

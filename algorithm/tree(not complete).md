@@ -28,7 +28,7 @@
   - 트리의 차수: 트리에 있는 노드의 차수 중에서 가장 큰 값
   - 단말 노드: 차수가 0인 노드. 자식 노드가 없는 노드
 
-![image-20220316092413554](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220316092413554.png)
+![image-20220316092413554](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220316092413554.png)
 
 - 높이
   - 노드의 높이: 루트에서 노드에 이르는 간선의 수. 노드의 레벨
@@ -46,7 +46,7 @@
   - 오른쪽 자식 노드(right child node)
 - 이진 트리의 예
 
-![image-20220316092549302](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220316092549302.png)
+![image-20220316092549302](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220316092549302.png)
 
 - 레벨 i에서 노드의 최대 개수는 2^i 개
 
@@ -61,7 +61,7 @@
     - 높이 3일 때 (2^(3+1) - 1) = 15개의 노드
   - 루트를 1번으로 하여 2^(h+1) - 1까지 정해진 위치에 대한 노드 번호를 가짐
 
-![image-20220316092852807](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220316092852807.png)
+![image-20220316092852807](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220316092852807.png)
 
 
 
@@ -69,7 +69,7 @@
   - 높이가 h이고 노드 수가 n개일 때 (단, 2^h <= n < 2^(h+1) - 1), 포화 이진 트리의 노드 번호 1번부터 n번까지 빈 자리가 없는 이진 트리
   - 예) 노드가 10개인 완전 이진 트리는?
 
-![image-20220316093032754](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220316093032754.png)
+![image-20220316093032754](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220316093032754.png)
 
 (=왼쪽부터 채운 거)
 
@@ -79,7 +79,7 @@
   - 높이 h에 대한 최소 개수의 노드를 가지면서 한쪽 방향의 자식 노드만을 가진 이진 트리
     - 왼쪽/오른쪽 편향 이진 트리
 
-![image-20220316093216826](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220316093216826.png)
+![image-20220316093216826](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220316093216826.png)
 
 
 
@@ -94,7 +94,7 @@
   - 후위순회(postorder traversal): LRV
     - 자식노드를 좌우 순서로 방문한 후, 부모 노드로 방문한다.
 
-![image-20220316094005759](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220316094005759.png)
+![image-20220316094005759](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220316094005759.png)
 
 
 
@@ -158,7 +158,7 @@ def postorder_traverse(T): #후위순회
   - 중위 순회는? H-D-I-B-J-E-A-F-K-C-L-G-M
   - 후위 순회는? H-I-D-J-E-B-K-F-L-M-G-C-A
 
-![image-20220316102756026](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220316102756026.png)
+![image-20220316102756026](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220316102756026.png)
 
 
 
@@ -172,20 +172,20 @@ def postorder_traverse(T): #후위순회
   - 노드 번호가 i인 노드의 왼쪽 자식 노드 번호? 2*i + 1
   - 레벨 n의 노드 번호 시작 번호는? 2^n
 
-![image-20220316103951297](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220316103951297.png)
+![image-20220316103951297](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220316103951297.png)
 
 - 노드 번호를 배열의 인덱스로 사용
 - 높이가 h인 이진 트리를 위한 배열의 크기는?
   - 레벨 i의 최대 노드 수는? 2^i
   - 따라서 1 + 2 + 4 + 8 + ... + 2^i = 2^(h+1) - 1
 
-![image-20220316104203228](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220316104203228.png)
+![image-20220316104203228](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220316104203228.png)
 
 
 
 - 편향 이진트리의 경우
 
-![image-20220316104235566](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220316104235566.png)
+![image-20220316104235566](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220316104235566.png)
 
 
 
@@ -199,18 +199,16 @@ def postorder_traverse(T): #후위순회
 
 참고: **어차피 정점(노드)의 개수와 간선의 개수는 항상 1만큼만 차이 난다.**
 
-- 부모 번호를 인덱스로 자식 번호를 저장
+- **부모 번호를 인덱스로 자식 번호를 저장**
 
-![image-20220316104751345](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220316104751345.png)
+![image-20220316104751345](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220316104751345.png)
 
 -> 두 개의 1차원 배열 또는 2열의 2차원 배열로
 
 참고: **루트가 무조건 1번이라는 건 틀리고, 부모보다 자식의 노드 번호가 항상 크다는 것도 틀리다.**
 
-
-
 ```python
-def pre_order(V):
+def pre_order(v):
     if v: 	# 0번 정점이 없으므로... 0번은 자식이 없는 경우를 표시
 		print(v)	# visit(v)
         pre_order(ch1[v])
@@ -218,11 +216,11 @@ def pre_order(V):
         
 def in_order(v):
     if v:
-        pre_order(ch1[v]).
+        in_order(ch1[v]).
         print(v)
-        pre_order(ch2[v])
+        in_order(ch2[v])
 
-def postorder(v):
+def post_order(v):
     if v:
         post_order(ch1[v])
         post_order(ch2[v])
@@ -248,3 +246,47 @@ for i in range(E):
 #post_order(1)	# 1번부터 시작해서 2-4-5-3-1 탐색 후 종료
 ```
 
+
+
+- **자식 번호를 인덱스로 부모 번호 저장**
+  - 자식은 여럿(이진트리의 경우 둘) 있을 수 있지만 부모는 하나만 존재한다.
+  - 그러므로, 1차원 배열로 충분하다.
+  - 자식에서 출발해 부모를 가리키는 화살표 모양으로 되어있는 트리를 연상하면 됨(가지 -> 줄기)
+
+```python
+...
+par = [0] * (V + 1)
+for i in range(E):
+    p, c = arr[i*2], arr[i*2 + 1]
+    par[c] = p
+
+# root 찾기
+for i in range(1, V+1):
+    if par[i] == 0:	# 부모가 없는 i번 정점이 root
+        root = i
+        break
+print(root)
+
+# 조상찾기
+anc = []	# 조상 목록 저장
+v = 2		# 조상을 찾을 정점 번호
+while par[v] != 0:	# v가 root가 아니면
+    anc.append(par[v])
+    v = par[v]		# v의 부모(par[v])를 자식으로
+print(*anc)
+```
+
+
+
+## 연결 리스트
+
+
+
+## 수식 트리
+
+- 수식을 표현하는 이진 트리
+- 수식 이진 트리(Expression - )라고 부르기도 함
+- 연산자는 루트 노드이거나 가지 노드
+- 피연산자는 모두 잎 노드
+
+기본적으로 후위

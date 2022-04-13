@@ -4,7 +4,7 @@
 
 > len, max, min 쓴 사람은 배운 거로 다시 하십시오.
 
-![image-20220118105112231](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220118105112231.png)
+![image-20220118105112231](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220118105112231.png)
 
 맨 마지막이 저였습니다. 구글링해서 나온 기능들을 사용하면서도 한 번도 써본 적 없는 함수들이다 보니 아리송했었습니다. 그런데 배웠던 기능들을 사용하라는 말씀을 듣고 나니 오히려 막혔던 문제까지 잘 풀리는 것이었습니다. 생각해보면 당연합니다. 배웠던 것들로 충분히 풀 수 있는 문제가 나왔을 테니까요. 먼 길을 돌아온 느낌이었습니다.
 

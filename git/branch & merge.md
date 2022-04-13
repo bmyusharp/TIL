@@ -28,7 +28,7 @@ master브랜치는 '상용' (실제 서비스로서 사용되는)
 
 `git switch <브랜치이름>`: **다른 브랜치로 이동**
 
-![image-20220311092412720](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220311092412720.png)
+![image-20220311092412720](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220311092412720.png)
 
 **헤드**를 바꾸고 git log로 확인해보면 현재 브랜치까지의 로그를 볼 수 있음
 
@@ -36,9 +36,9 @@ master브랜치는 '상용' (실제 서비스로서 사용되는)
 
 `--graph`: 가지 모양으로 보기
 
-![image-20220311093105994](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220311093105994.png)
+![image-20220311093105994](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220311093105994.png)
 
-![image-20220311093344214](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220311093344214.png)
+![image-20220311093344214](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220311093344214.png)
 
 (병합되지 않은 브랜치를 삭제하지 못함)(단, 강제로 삭제한다면 -D 사용)
 
@@ -62,7 +62,7 @@ master브랜치는 '상용' (실제 서비스로서 사용되는)
 
 머지를 해도 새로운 커밋이 생기지 않는 경우
 
-![image-20220311101128065](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220311101128065.png)
+![image-20220311101128065](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220311101128065.png)
 
 그냥 최신 커밋이 된 것일 뿐
 
@@ -70,15 +70,15 @@ master브랜치는 '상용' (실제 서비스로서 사용되는)
 
 ### 2. 3-way merge (merge commit)
 
-![image-20220311102220828](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220311102220828.png)
+![image-20220311102220828](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220311102220828.png)
 
 둘의 분기점, 갈라진 브랜치, 원래 마스터 3가지를 사용하여 merge하는 것
 
-![image-20220311102426361](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220311102426361.png)
+![image-20220311102426361](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220311102426361.png)
 
-![image-20220311102434502](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220311102434502.png)
+![image-20220311102434502](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220311102434502.png)
 
-![image-20220311102450760](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220311102450760.png)
+![image-20220311102450760](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220311102450760.png)
 
 알아서 커밋명이 생성됨 (Merge branch 'signout')
 
@@ -90,17 +90,17 @@ master브랜치는 '상용' (실제 서비스로서 사용되는)
 
 - 반면 동일 파일이더라도 **'서로 다른 부분'**을 수정했다면 conflict 없이 자동으로 merge commit 된다.
 
-![image-20220311103348323](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220311103348323.png)
+![image-20220311103348323](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220311103348323.png)
 
-![image-20220311103359308](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220311103359308.png)
+![image-20220311103359308](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220311103359308.png)
 
-![image-20220311103607122](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220311103607122.png)
+![image-20220311103607122](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220311103607122.png)
 
 두 개의 파일을 동시에 보여준다.
 
 - Vim 에디터가 갑자기 나올 수도 있음
 
-![image-20220311104101153](C:\Users\1004r\AppData\Roaming\Typora\typora-user-images\image-20220311104101153.png)
+![image-20220311104101153](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220311104101153.png)
 
 주피터노트북 처럼 (입력 모드, 명령 모드)가 있다. 
 
@@ -125,7 +125,6 @@ master브랜치는 '상용' (실제 서비스로서 사용되는)
 checkout은 switch처럼 헤드 이동 뿐만 아니라 restore(되돌리기) 기능 중 선택할 수가 있다.
 
 즉, 기존 checkout의 두 가지 기능을 switch와 restore로 나눠놓았다고 볼 수 있다.
-
 
 
 
