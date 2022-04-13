@@ -15,7 +15,7 @@
 
 - 게시글(Article)과 댓글(Comment)간의 모델 관계 설정
 
-![image-20220413090910695](https://raw.githubusercontent.com/bmyusharp/TIL/master/img/image-20220413090910695.png)
+![image-20220413090910695](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220413090910695.png)
 
 게시글에 댓글 외래키를 다는 것이 아니라, 댓글에 게시글 외래키를 다는 것은 1대1 대응이 된다! (1:N, N:1)
 
@@ -697,7 +697,7 @@ $ python manage.py migrate
 - 1을 입력 후 enter
   - 기존 테이블에 추가되는 user_id 필드의 값을 1로 설정하겠다 라는 의미
 
-![image-20220413150423200](https://raw.githubusercontent.com/bmyusharp/TIL/master/img/image-20220413150423200.png)
+![image-20220413150423200](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220413150423200.png)
 
 - migrate 과정 마무리
 
