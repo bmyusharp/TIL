@@ -1,10 +1,12 @@
+[TOC]
+
 # TIL
 
 > 매일 배운 내용을 기록하자
 
 ## 목차
 
-### - [python](./python)
+### [python](./python)
 
  1. [python random](./python/python_random.md)
 
@@ -24,7 +26,7 @@
 
     기본적인 함수 활용에 대해서 배웠습니다. 함수의 문법, Input(parameter)과 Output(return), 그리고 함수를 사용하는 이유는 같은 코드를 재사용하기 위해서 입니다.
 
-### - [algorithm](./algorithm)
+### [algorithm](./algorithm)
 
  0. [Euclidean algorithm](./algorithm/Euclidean%20Algorithm.md)
 
@@ -42,7 +44,7 @@
 
 ​		프로그래밍 사고를 위한 기본적인 논리학습
 
-### - [WEB / CSS](./WEB%20CSS)
+### [WEB / CSS](./WEB%20CSS)
 
 1. [HTML basics](./WEB%20CSS/HTML%20basics.md)
 
@@ -52,17 +54,41 @@
 
    CSS에서의 선택자 우선순위, 상속에 대해 배웠습니다.
 
-### - [git](./git)
+### [git](./git)
 
 1. [what is git](./git/what_is_git.md)
+
 2. [branch & merge](./git/branch%20&%20merge.md)
 
-### - [etc](./etc)
+3. [temporal_rewind](./git/temporal_rewind.md)
 
-### - [git.assets](./git.assets)
+   시간을 되돌리는 법 / 그리고 협업(workflow)관련 내용들입니다.
 
-### - Django
-### - [SQL / ORM](./SQL%20ORM)
+### [etc](./etc)
+
+
+
+### [Django](./Django)
+
+1. [django_first](./Django/django_first.md)
+
+2. [django_model](./Django/django_model.md)
+
+3. [form model](./Django/form%20model.md)
+
+4. [authentication](./Django/authentication.md)
+
+   신원을 확인하고, 특히 사용자별로 가능한 작업을 한정하는 기능입니다.
+
+5. [user](./Django/user.md)
+
+   로그인/로그아웃과 회원가입/회원정보변경/회원탈퇴 등의 기능입니다.
+
+6. [relation_database](./Django/relation_database.md)
+
+   1:N의 관계를 갖는 테이블들의 다루는 법입니다. 특히, 댓글 기능에 대해 상세히 작성하였습니다.
+
+### [SQL / ORM](./SQL%20ORM)
 
 1. [SQL](./SQL%20ORM/SQL%20CRUD.md)
 
