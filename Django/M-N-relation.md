@@ -506,6 +506,7 @@ from django.conf import settings
 # Create your models here.
 class Article(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=10)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -545,4 +546,287 @@ $ python manage.py makemigrations
 > 1번 유저가 2,3,4번에 좋아요를 눌렀다 -> 어떻게 저장할 것인가?
 >
 > 즉, Article과 User의 M:N 관계이다.
+
+빨간 ERRORS 발생
+
+HINT: related_name 인자를 정하거나, 수정 - 두 줄의 user (1:N(작성자:작성글) 에서와 M:N(좋아요 한 유저:게시글)) 에서 문제 발생한 것
+
+- like_users 필드 생성 시 자동으로 역참조는 .article_set 매니저를 생성
+- 그러나 이전 1:N 관계에서 이미 해당 매니저 이름을 사용 중이기 때문
+- User와 관계된 ForeignKey 또는 MTMF 중 하나에 related_name 추가 필요
+
+```python
+...
+class Article(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_articles')
+...
+```
+
+![image-20220418141512747](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220418141512747.png)
+
+> 현재 User - Article 간 사용 가능한 DB API
+
+- a
+- a
+- u
+- u
+
+
+
+
+
+- url 작성
+
+```python
+# articles/urls.py
+
+urlpatterns = [
+    ...
+    path('<int:article_pk>/likes/', views.likes, name='likes'),
+]
+```
+
+- like view 함수 작성
+
+```python
+# articles/views.py
+...
+@require_POST
+def likes(request, article_pk):
+    if request.user.is_authenticated:
+        article = get_object_or_404(Article, pk=article_pk)
+
+        if request.user in article.like_users.all():
+            article.like_users.remove(request.user)
+
+        else:
+            article.like_users.add(request.user)
+        return redirect('articles:index')
+    return redirect('accounts:login')
+```
+
+- index 페이지에 like 출력 부분 작성
+
+```html
+<!-- articles/index.html -->
+...
+<p>글 내용: {{ article.content }}</p>
+    <div>
+      <form action="{% url 'articles:likes' article.pk 0%}" method="POST">
+        {% csrf_token %}
+        {% if user in article.like_users.all %}
+          <input type="submit" value="좋아요 취소">
+        {% else %}
+          <input type="submit" value="좋아요">
+        {% endif %}
+      </form>
+    </div>
+    <a href="{% url 'articles:detail' article.pk %}">DETAIL</a>
+...
+```
+
+
+
+### QuerySetAPI - 'exist()'
+
+- QuerySet에 결과가 포함되어 있으면 True를 반환하고 그렇지 않으면 False를 반환
+- 특히 규모가 큰 QuerySet의 컨텍스트에서 특정 개체 존재 여부와 관련된 검색에 유용
+- 고유한 필드 (예: pk) 가 있는 모델이 QuerySet의 구성원인지 여부를 찾는 가장 효율적인 방법
+
+
+
+## Profile Page
+
+- 자연스러운 follow 흐름을 위한 회원 프로필 페이지 작성하기
+
+- url 작성
+
+```python
+# accounts/urls.py
+...
+urlpatterns = [
+    path('<username>/', views.profile, name='profile'),
+] # 문자열을 그대로 쓴다고? 이 path 주소가 위로 올라가지 않게 조심할 것 (위에서부터 찾기 때문)(잘못하면 하루종일 뒤질 수도 있다)
+```
+
+- profile view 함수 작성
+
+```python
+# accounts.views.py
+from django.contrib.auth import get_user_model
+...
+def profile(request, username):
+    person = get_object_or_404(get_user_model(), username=username)
+    context = {
+        'person': person,
+    }
+    return render(request, 'accounts/profile.html', context)
+```
+
+- profile 페이지 작성
+
+```html
+<!-- accounts/profile.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ person.username }}님의 프로필</h1>
+
+<hr>
+
+{% comment %}이 사람이 작성한 게시글 목록{% endcomment %}
+<h2>{{ person.username }}이 작성한 게시글</h2>
+{% for article in person.article_set.all %}
+  <p>{{ article.title }}</p>
+{% endfor %}
+
+<hr>
+
+{% comment %}이 사람이 작성한 댓글 목록{% endcomment %}
+<h2>{{ person.username }}이 작성한 게시글</h2>
+{% for comment in person.comment_set.all %}
+  <p>{{ comment.content }}</p>
+{% endfor %}
+
+<hr>
+
+{% comment %}이 사람이 좋아요를 누른 게시글 목록{% endcomment %}
+<h2>{{ person.username }}이 좋아요를 누른 게시글</h2>
+{% for article in person.like_articles.all %}
+  <p>{{ article.title }}</p>
+{% endfor %}
+{% endblock content %}
+```
+
+```html
+<!-- base.html -->
+...
+<h3>Hello, {{ user }}</h3>
+      <a href="{% url 'accounts:profile' request.user.username %}">내 프로필</a>
+      <form action="{% url 'accounts:logout' %}" method="POST">
+...
+```
+
+
+
+## Follow
+
+### Follow 구현
+
+- MTMF 작성 후 마이그레이션
+
+```python
+# accounts/models.py
+
+class User(AbstractUser):
+    followings = models.ManyToManyField('self', symmetrical=False, related_name='followers')
+```
+
+```bash
+$ python manage.py makemigrations
+$ python manage.py migrate
+```
+
+참조와 역참조 둘 다 작성해줘야 함
+
+symmetrical 속성을 사용함
+
+- **symmetrical**
+  - ManyToManyField가 동일한 모델(on self)을 가리키는 정의에서만 사용
+  - symmetrical=True(기본값)일 경우 Django는 person_set 매니저를 추가하지 않음
+  - source 모델의 인스턴스가 target 모델의 인스턴스를 참조하면, target 모델 인스턴스도 source 모델 인스턴스를 자동으로 참조하도록 함
+    - 즉, 내가 당신의 친구라면 당신도 내 친구가 되는 것 (페이스북 친구)
+    - 대칭을 원하지 않는 경우 False 로 설정
+    - Follow 기능 구현에서 다시 확인할 것
+
+
+
+- 생성된 중개 테이블 확인
+
+![image-20220418151354974](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220418151354974.png)
+
+-> from_ 과 to_ 가 생김 
+
+- url 작성
+
+```python
+# accounts/urls.py
+...
+	path('<int:user_pk>/follow/', views.follow, name='follow'),
+```
+
+- follow view 함수 작성
+
+```python
+# accounts/views.py
+# request.user => me
+# get_object_or_404 => you 로 변환해서 작업하면 헷갈리지 않음.
+
+@require_POST
+def follow(request, user_pk):
+    if request.user.is_authenticated:
+        person = get_object_or_404(get_user_model(), pk=user_pk)
+        if person != request.user:
+            if person.followers.filter(pk=request.user.pk).exists():
+                person.followers.remove(request.user)
+            else:
+                person.followers.add(request.user)
+        return redirect('accounts:profile', person.username)
+    return redirect('accounts:login')
+```
+
+- profile 페이지에 팔로우와 언팔로우 버튼 작성
+  1. 팔로잉 / 팔로워 수 출력
+  2. 자기 자신을 팔로우 할 수 없음
+
+```html
+<!-- accounts/profile.html -->
+<!-- 상단 부분 -->
+<div>
+  <div>
+    팔로우 {{ person.followings.all|length }} | 팔로워 {{ person.followers.all|length }}
+  </div>
+  {% if user != person %}
+    <div>
+      <form action="" method="POST">
+        {% csrf_token %}
+        {% if user in person.followers.all %}
+          <input type="submit" value="언팔로우">
+        {% else %}
+          <input type="submit" value="팔로우">
+        {% endif %}
+      </form>
+    </div>
+  {% endif %}
+</div>
+```
+
+팁. 아래 코드는 위 코드와 완벽하게 똑같이 작동함
+
+with 작명구문=원래구문 으로 with 블록 내에서 긴 이름을 줄여부를 수 있음
+
+단, 최적화되는 것은 아님.
+
+```html
+{% with followers=person.followers.all followings=person.followings.all %}
+<div>
+  <div>
+    팔로우 {{ followings|length }} | 팔로워 {{ followers|length }}
+  </div>
+  {% if user != person %}
+    <div>
+      <form action="" method="POST">
+        {% csrf_token %}
+        {% if user in followers %}
+          <input type="submit" value="언팔로우">
+        {% else %}
+          <input type="submit" value="팔로우">
+        {% endif %}
+      </form>
+    </div>
+  {% endif %}
+</div>
+{% endwith %}
+```
 
