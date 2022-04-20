@@ -613,7 +613,7 @@ def likes(request, article_pk):
 ...
 <p>글 내용: {{ article.content }}</p>
     <div>
-      <form action="{% url 'articles:likes' article.pk 0%}" method="POST">
+      <form action="{% url 'articles:likes' article.pk %}" method="POST">
         {% csrf_token %}
         {% if user in article.like_users.all %}
           <input type="submit" value="좋아요 취소">
@@ -760,7 +760,7 @@ symmetrical 속성을 사용함
 
 ```python
 # accounts/views.py
-# request.user => me
+# request.user => me user
 # get_object_or_404 => you 로 변환해서 작업하면 헷갈리지 않음.
 
 @require_POST
@@ -789,7 +789,7 @@ def follow(request, user_pk):
   </div>
   {% if user != person %}
     <div>
-      <form action="" method="POST">
+      <form action="{% url 'accounts:follow' person.pk %}" method="POST">
         {% csrf_token %}
         {% if user in person.followers.all %}
           <input type="submit" value="언팔로우">
