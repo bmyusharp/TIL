@@ -622,3 +622,583 @@ ArticleListSerializer():
 
 ```
 
+
+
+## 4.5. 'many' argument
+
+- many=True
+  - "Serializing multiple objects"
+  - 단일 인스턴스 대신 Query...
+
+
+
+## 4.6. Build RESTful API
+
+|             | GET          | POST    | PUT         | DELETE      |
+| ----------- | ------------ | ------- | ----------- | ----------- |
+| articles/   | 전체 글 조회 | 글 작성 |             |             |
+| articles/1/ | 1번 글 조회  |         | 1번 글 수정 | 1번 글 삭제 |
+
+
+
+## 4.7. GET
+
+### 4.7.1. Article List
+
+- url 및 view 함수 작성
+
+```python
+# articles/urls.py
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('articles/', views.article_list),
+]
+```
+
+```python
+# articles/views.py
+
+from rest_framework.response import Response
+from django.shortcuts import render
+
+from django.shortcuts import render, get_list_or_404
+
+from .serializers import ArticleListSerializer
+from .models import Article
+
+def article_list(request):
+    articles = get_list_or_404(Article)
+    serializer = ArticleListSerializer(articles, many=True)
+    return Response(serializer.data)
+```
+
+- **`api_view`** decorator
+  - 기본적으로 GET 메서드만 허용되며 다른 메서드 요청에 대해서는 405 Method Not Allowed로 응답
+  - View 함수가 응답해야 하는 HTTP 메서드의 목록을 리스트의 인자로 받음
+  - DRF에서는 선택이 아닌 **필수적으로 작성**해야 해당 view 함수가 정상적으로 동작함
+
+```python
+# api_view 데코레이터 예시
+from rest_framework.decorators import api_view
+
+@api_view(['GET', 'POST'])
+def hello_world(request):
+    if request.method == 'POST':
+        return Response({'message': 'Got some data!', 'data':request/data})
+    return Response({'message': 'Hello, world!'})
+```
+
+- http://127.0.0.1:8000/api/v1/articles/ 로 GET 요청 후 응답 확인
+- POST로 요청 후 응답 확인 -> "detail": "Method \POST\ not allowed." 라는 내용의 JSON을 받음
+
+
+
+### 4.7.2. Article Detail
+
+- Article List와 Article Detail을 구분하기 위해 추가 Serializer 정의
+- 구분하는 이유는 당연히, 게시판에 글 상세내용을 띄우지 않기 위해
+- 모든 필드를 직렬화하기 위해 fields 옵션을 '\__all__'로 설정
+
+```python
+# articles/serializers.py
+...
+class ArticleSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        mode = Article
+        fields = '__all__'
+```
+
+- url 및 view 함수 작성
+
+```python
+# articles/urls.py
+
+urlpatterns = [
+    ...,
+    path('articles/<int:article_pk>/', views.article_detail),
+]
+```
+
+```python
+# articles/views.py
+
+from django.shortcuts import get_object_or_404
+from .serializers import ArticleListSerializer, ArticleSerializer
+
+@api_view
+def article_detail(request, article_pk):
+    article = get_object_or_404(Article, pk=article_pk)
+    serializer = ArticleSerializer(article)
+    return Response(serializer.data)
+```
+
+- http://127.0.0.1:8000/api/v1/articles/1/ 로 GET 요청 후 응답 확인
+
+
+
+## 4.8. POST
+
+### 4.8.1. Create Article
+
+- 201 Created 상태 코드 및 메시지 응답
+- RESTful 구조에 맞게 작성
+  1. URI는 자원을 표현
+  2. 자원을 조작하는 행위는 HTTP Method
+- article_list 함수로 게시글을 조회하거나 생성하는 행위를 모두 처리 가능
+
+
+
+- view list함수 수정
+
+```python
+# articles/views.py
+
+from rest_framework import status
+
+@api_view(['GET', 'POST']) # POST 추가
+def article_list(request):
+    # 전체 게시글 조회
+    if request.method == 'GET':
+        articles = get_list_or_404(Article)
+        serializer = ArticleListSerializer(articles, many=True)
+        return Response(serializer.data)3
+    # 게시글 생성
+    elif request.method == 'POST':
+        serializer = ArticleSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+```
+
+
+
+#### 4.8.1.1. Status Codes in DRF
+
+- DRF에는 status code를 보다 명확하고 읽기 쉽게 만드는 데 사용할 수 있는 정의된 상수 집합을 제공
+- **status** 모듈에 HTTP status code 집합이 모두 포함되어 있음
+
+```python
+# status 모듈 예시
+
+from rest_framework import status
+
+def example_list(request):
+    return Response(serializers.data, status=status.HTTP_201_CREATED)
+```
+
+- 단순히 `status=201` 같은 표현으로도 사용할 수 있지만 DRF는 권장하지 않음
+
+```python
+	Response(serializer.data, status=201)
+```
+
+
+
+- HTTP body에 form-data로 title과 content 데이터 작성
+- http://127.0.0.1:8000/api/v1/articles/ 로 POST 요청 후 응답 확인
+
+
+
+#### 4.8.1.2. 'raise_exception' argument
+
+- "Raising an exception on invalid data"
+- `is_valid()`는 유효성 검사 오류가 있는 경우 serializers.ValidationError 예외를 발생시키는 선택적 `raise_exception` 인자를 사용 할 수 있음
+- DRF에서 제공하는 기본 예외 처리기에 의해 자동으로 처리되며, 기본적으로 HTTP status code 400을 응답으로 반환함
+
+- raise_exception 작성
+
+```python
+# articles/views.py
+...
+    elif request.method == 'POST':
+        serializer = ArticleSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+```
+
+
+
+## 4.9. DELETE
+
+### 4.9.1. Delete Article
+
+- **204 No Content** 상태 코드 및 메시지 응답 (''실제로 잘 삭제 되었다' 라는 뜻)
+- article_detail 함수로 상세 게시글을 조회하거나 삭제하는 행위 모두 처리 가능
+
+```python
+# articles/views.py
+
+@api_view(['GET', 'DELETE']) # DELETE 추가
+def article_detail(request, article_pk):
+    
+    if request.method == 'GET':
+        article = get_object_or_404(Article, pk=article_pk)
+        serializer = ArticleSerializer(article)
+        return Response(serializer.data)
+
+    elif request.method == 'DELETE':
+        article.delete()
+        data = {
+            'delete': f'데이터 {article.pk}번이 삭제되었습니다.'
+        }
+        return Response(data, status=status.HTTP_204_NO_CONTENT)
+```
+
+- http://127.0.0.1:8000/api/v1/articles/1/ 로 DELETE 요청 후 응답 확인
+
+
+
+## 4.10. PUT
+
+### 4.10.1. Update Article
+
+- article_detail 함수로 상세 게시글을 조회하거나 삭제, 수정하는 행위 모두 처리 가능
+
+```python
+# articles/views.py
+
+@api_view(['GET', 'DELETE', 'PUT']) # PUT 추가
+def article_detail(request, article_pk):
+    ...
+    elif request.method == 'PUT':
+        serializer = ArticleSerializer(article, data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
+```
+
+- HTTP body에 form-data로 title과 content 수정 데이터 작성
+- http://127.0.0.1:8000/api/v1/articles/1/ 로 PUT 요청 후 응답 확인
+
+
+
+
+
+#  5. 1:N Relation
+
+## 5.1. DRF with 1:N Relation
+
+- 1:N 관계에서의 모델 data를 직렬화(serialization)하여 JSON으로 변환하는 방법에 대한 학습
+- 2개 이상의 1:N 관계를 맺는 모델을 두고 CRUD 로직을 수행 가능하도록 설계하기
+
+
+
+## 5.2. GET
+
+### 5.2.1. Comment List
+
+- 데이터베이스 초기화 후 Comment 모델 작성
+
+```python
+# articles/models.py
+
+class Comment(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    content = models.TextField
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+```
+
+- 마이그레이션 작업 후 data seed 진행
+
+```bash
+$ python manage.py makemigrations
+$ python manage.py migrate
+$ python manage.py seed articles --number=20
+```
+
+- CommentSerializer 작성
+
+```python
+# articles/serializers.py
+
+from .models import Article, Comment
+
+class CommentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Comment
+        fields = '__all__'
+```
+
+- url 작성 및 comment_list 함수 정의
+
+```python
+# articles.py
+
+urlpatterns = [
+    ...
+    path('comments/', views.comment_list),
+]
+```
+
+```python
+# articles/views.py
+
+from .models import Article, Comment
+from .serializers import ArticleListSerializer, ArticleSerializer, CommentSerializer
+
+@api_view(['GET'])
+def comment_list(request):
+    comments = get_list_or_404(Comment)
+    serializer = CommentSerializer(comments, many=True)
+    return Response(serializer.data)
+```
+
+- http://127.0.0.1:8000/api/v1/comments/ 로 GET 요청 후 응답 확인
+
+
+
+### 5.2.2. Comment Detail
+
+- url 작성 및 comment_detail 함수 정의
+
+```python
+# articles/urls.py
+
+urlpatterns = [
+    ...,
+    path('comments/<int:comment_pk>/', views.comment_detail),
+]
+```
+
+```python
+# articles/views.py
+
+@api_view(['GET'])
+def comment_detail(request, comment_pk):
+    comment = get_object_or_404(Comment, pk=comment_pk)
+    serializer = CommentSerializer(comment)
+    return Response(serializer.data)
+```
+
+- http://127.0.0.1:8000/api/v1/comments/1/ 로 GET 요청 후 응답 확인
+
+
+
+## 5.3. POST
+
+### 5.3.1. Create Comment
+
+- url 및 comment_create 함수 작성
+
+```python
+# articles/urls.py
+
+urlpatterns = [
+    ...
+    path('articles/<int:article_pk>/comments/', views.comment_create),
+]
+```
+
+```python
+# articles/views.py
+
+@api_view(['POST'])
+def comment_create(request, article_pk):
+    article = get_object_or_404(Article, pk=article_pk)
+    serializer = CommentSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+```
+
+- http://127.0.0.1:8000/api/v1/articles/1/commets/로 POST 요청 시도
+
+![image-20220420152547515](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220420152547515.png)
+
+- Article 생성과 달리 Comment 생성은 생성 시에 참조하는 모델의 객체 정보가 필요
+  - 1:N 관계에서 N은 어떤 1을 참조하는지에 대한 정보가 필요하기 때문 (외래 키)
+
+#### 5.3.1.1. Passing Additional attribures to .save()
+
+- .save() 메서드는 특정 Serializer 인스턴스를 저장하는 과정에서 추가적인 데이터를 받을 수 있음
+
+  - 인스턴스를 저장하는 시점에 추가 데이터 삽입이 필요한 경우
+
+    ```python
+    # views.py - comment_create func
+    ...if serializer.is_valid(raise_exception=True):
+           serializer.save(article=article) #
+            return ...
+    ```
+
+    is_valid 에서 통과하도록... modelform과 유사한 serializer에서 
+
+
+
+## 5.4. Read Only Field (읽기 전용 필드)
+
+- 어떤 게시글에 작성하는 댓글인지에 대한 정보를 form-data로 넘겨주지 않았기 때문에 직렬화하는 과정에서 article 필드가 유효성 검사(is_valid)를 통과하지 못함
+  - CommentSerializer 에서 article field에 해당하는 데이터 또한 요청으로 부터 받아서 직렬화하는 것으로 설정되었기 때문
+- 이때는 읽기 전용 필드(read_only_fields) 설정을 통해 직렬화하지 않고 반환 값에만 해당 필드가 포함되도록 설정 할 수 있음
+- 그러나, 읽기 전용 필드는 응답에는 포함됨
+
+```python
+# articles/serializers.py
+
+class CommentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Comment
+        fields = '__all__'
+        read_only_fields = ('article',) # 리턴에는 포함된다
+```
+
+
+
+## 5.5. DELETE & PUT
+
+### 5.5.1. delete, update Comment
+
+- Article 생성 로직에서와 마찬가지로 comment_detail 함수가 모두 처리할 수 있도록 작성
+
+```python
+# articles/views.py
+
+@api_view(['GET', 'DELETE', 'PUT'])
+def comment_detail(request, comment_pk):
+    comment = get_object_or_404(Comment, pk=comment_pk)
+    
+    if request.method == 'GET': 
+        serializer = CommentSerializer(comment)
+        return Response(serializer.data)
+    
+    elif request.method == 'DELETE': 
+        comment.delete()
+        data = {
+            'delete': f'댓글 {comment_pk}번이 삭제되었습니다.'
+        }
+        return Response(data, status=status.HTTP_204_NO_CONTENT)
+
+    elif request.method == 'PUT': 
+        serializer = CommentSerializer(comment, data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
+```
+
+- http://127.0.0.1:8000/api/v1/articles/1/commets/2/로 DELETE 요청 후 응답 확인
+- http://127.0.0.1:8000/api/v1/articles/1/commets/3/로 PUT 요청 후 응답 확인
+
+
+
+## 5.6. 1:N Serializer
+
+1. 특정 게시글에 작성된 댓글 목록 출력하기
+   - 기존 필드 override
+2. 특정 게시글에 작성된 댓글의 개수 구하기
+   - 새로운 필드 추가
+
+### 5.6.1. 특정 게시글에 작성된 댓글 목록 출력하기
+
+- Serializer는 기존 필드를 override 하거나 추가 필드를 구성할 수 있음
+- 우리가 작성한 로직에서는 크게 2가지 형태로 구성할 수 있음
+  	1. PrimaryKeyRelatedField
+  	1. Nested relationships
+
+- case1) `PrimaryKeyRelatedField`
+  - pk를 사용하여 관계된 대상을 나타내는 데 사용할 수 있음
+  - 필드가 to many relationships(N)를 나타내는데 사용되는 경우 many=True 속성 필요
+  - comment_set 필드 값을 form-data로 받지 않으므로 read_only=True 설정 필요
+
+```python
+# articles/serializers.py
+
+class ArticleSerializer(serializers.ModelSerializer):
+    comment_set = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    # 얘는 Meta 안에 설정할 수 없음
+
+    class Meta:
+        mode = Article
+        fields = '__all__'
+```
+
+- [참고] 역참조 시 생성되는 comment_set을 다른 매니저 이름으로 override 할 수 있음
+  - 단, 다음과 같이 수정할 경우 이전 serializers.py 에서의 클래스 변수명도 일치하도록 수정해야함
+
+```python
+# articles/models.py
+
+class Comment(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='comments')
+```
+
+
+
+- case 2) `Nested relationships`
+  - 모델 관계상으로 참조된 대상은 참조하는 대상의 표현(응답)에 포함되거나 중첩(nested) 될 수 있음
+  - 이러한 중첩된 관계는 serializers를 필드로 사용하여 표현할 수 있음
+  - 두 클래스의 상하위치 변경
+
+```python
+# articles/serializers.py
+
+class CommentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Comment
+        fields = '__all__'
+        read_only_fields = ('article',)
+
+# 위아래 순서 중요 
+        
+class ArticleSerializer(serializers.ModelSerializer):
+    comment_set = CommentSerializer(many=True, read_only=True) #
+
+    class Meta:
+        mode = Article
+        fields = '__all__'
+```
+
+
+
+### 5.6.2. 특정 게시글에 작성된 댓글의 개수 구하기
+
+- comment_set 매니저는 모델 관계로 인해 자동으로 구성되기 때문에 커스텀 필드를 구성하지 않아도 comment_set이라는 필드명을 fields 옵션에 작성만 해도 사용 할 수 있었음
+- 하지만 지금처럼 별도의 값을 위한 필드를 사용하려는 경우 자동으로 구성되는 매니저가 아니기 때문에 직접 필드를 작성해야 함
+
+```python
+# articles/serializers.py
+
+class ArticleSerializer(serializers.ModelSerializer):
+    comment_set = CommentSerializer(many=True, read_only=True)
+    comment_count = serializers.IntegerField(source='comment_set.count', read_only=True)
+
+    class Meta:
+        mode = Article
+        fields = '__all__'
+```
+
+- **`source` arguments**
+  - 필드를 채우는 데 사용 할 속성의 이름
+  - 점 표기법(dot notation)을 사용하여 속성을 탐색 할 수 있음
+  - comment_set이라는 필드에 .(dot)을 통해 전체 댓글의 개수 확인 가능
+  - `.count()`는 built-in Queryset API 중 하나
+
+
+
+### [주의 사함] '`read_only_fields`' shortcut issue
+
+- 특정 필드를 override 혹은 추가한 경우 `read_only_fields shortcut`으로 사용할 수 없음
+
+```python
+# articles/serializers.py
+
+class ArticleSerializer(serializers.ModelSerializer):
+    comment_set = CommentSerializer(many=True)
+    comment_count = serializers.IntegerField(source='comment_set.count')
+
+    class Meta:
+        mode = Article
+        fields = '__all__'
+        # read_only_fields = ('comment_set', 'comment_count',) XXXXXX 이렇게 하지 말 것!
+```
+
