@@ -1,40 +1,4 @@
-# 0. 목차
-
-1. [HTTP (복습)](#1. HTTP)
-
-2. [RESTful API](#2. RESTful API)
-
-3. [Response](#3. Response)
-
-​		3.1. [Init Project](#3.1. Init Project)
-
-​		3.2. [Create Dummy Data](#3.2. Create Dummy Data)
-
-​		3.3. [Response](#3.3. Response)
-
-​			3.3.1. [HTML](#3.3.1. HTML)
-
-​			3.3.2. [JsonResponse](#3.3.2. JsonResponse)
-
-​				3.3.2.1. [Serialization](#3.3.2.1. Serialization)
-
-​			3.3.3. [Django Serializer](#3.3.3. Django Serializer)
-
-​			3.3.4. [Django REST Framework](#3.3.4. Django REST Framework)
-
-4. [Single Model](#4. Single Model)
-
-​		4.1. [DRF with Single Model](#4.1. DRF with Single Model)
-
-​		4.2. [Init Project](#4.2. Init Project)
-
-​		4.3. [ModelSerializer](#4.3. ModelSerializer)
-
-​		4.4. [Serializer in Shell](#4.4. Serializer in Shell)
-
-5. 1:N Relation
-
-
+[TOC]
 
 # 1. HTTP
 
