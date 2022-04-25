@@ -103,3 +103,9 @@
 2. [SQL More](./SQL%20ORM/SQL2.md)
 
    SQL 기본 문법 (WHERE(조건문), Aggregate Function(집계함수), LIKE(와일드카드), ORDER BY(정렬), GROUP BY(요약 행 집합 생성), ALTER TABLE(테이블 조작))
+
+### [JavaScript](./JavaScript)
+
+1. [JS Basic-1](./JavaScript/JS%20Basic-1.md)
+
+   자바스크립트 입문을 위한 기본적인 정보, 변수의 선언과 데이터 타입, 연산자와 조건문, 반복문까지

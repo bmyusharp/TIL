@@ -765,7 +765,7 @@ def article_list(request):
     if request.method == 'GET':
         articles = get_list_or_404(Article)
         serializer = ArticleListSerializer(articles, many=True)
-        return Response(serializer.data)3
+        return Response(serializer.data)
     # 게시글 생성
     elif request.method == 'POST':
         serializer = ArticleSerializer(data=request.data)

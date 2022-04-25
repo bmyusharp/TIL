@@ -1,7 +1,91 @@
+# 복습
+
+앞으로는 article보다 account를 먼저 개발하는 게 편할 것이다. 왜냐하면, 회원에 따른 글 작성이 이루어지기 때문에...
+
+AUTH_USER_MODEL을 먼저 설정해두고, 나중에 설정할 수 있다. - 프로젝트를 시작할 때, 반드시 커스텀 유저를 세팅하는 것을 추천한다.
+
+```python
+# apps/models.py
+from django.contrib.auth.models import AbstractUser
+
+class User(AbstractUser):
+	pass
+# 여기까지를, migrate 하기 전에
+```
+
+1. APP 만들고,
+2. 등록하고
+3. url 관리하는게 기본 과정이었다면,
+4. 여기에 추가로 AUTH_USER_MODEL 설정과 models.py 설정까지
+
+```python
+# pjt/urls.py
+urlpatterns = [
+    ...
+    path('accounts/', include('accounts.urls')),
+]
+```
+
+```python
+# accounts/urls.py
+from django.urls import path
+
+app_name = 'accounts'
+
+urlpatterns = [
+    
+]
+```
+
+model을 만들고 그것을 view에서 사용하기 위해 거의 매번 model을 먼저 정의하게 될 것이다.
+
+```python
+# accounts/models.py
+from django.db import models
+from django.contrib.auth.models import AbstractUser
+
+# 일단은 abstractUser 사용
+class User(AbstractUser):
+    pass
+```
+
+django의 원래 user class를 살펴보면, meta에 swappable 설정이 되어 있었다. abstractuser는 이미 필드가 다 정해져 있는(first_name, last_name, email 등) 것이다. abstractBaseUser를 받아 쓰면 password 등 아주 간단한 것만 있다. 여기에 원하는 필드를 추가하여 쓰면 된다..
+
+```python
+# settings.py
+AUTH_USER_MODEL = 'accounts.User' 
+# 앱 이름의 클래스 이름을 auth user에 추가한다
+```
+
+모델을 만들었으니, makemigrations - migrate
+
+위 설정을 하지 않았다면 auth_user로 표시됐을 부분이
+
+위 설정으로 인해 **accounts_user**로 나오게 된다
+
+그리고, [admin 설정](https://docs.djangoproject.com/en/4.0/topics/auth/customizing/#substituting-a-custom-user-model) 에서 그대로 복사-붙여넣기
+
+```python
+# accounts/admin.py
+from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from .models import User
+
+admin.site.register(User, UserAdmin)
+# admin 사이트에 User클래스 UserAdmin으로 등록해줘
+```
+
+
+
+
+
+
+
+
+
 # Authentication System I
 
 - Django 인증 시스템은 django.contrib.auth에 Django contrib module로 제공
-
 - 필수 구성은 settings.py에 이미 포함되어 있으며 INSTALLED_APPS 설정에 나열된 아래 두 항목으로 구성됨
 
 1. django.contrib.auth - 인증 프레임워크의 핵심과 기본 모델을 포함
@@ -402,7 +486,9 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 def signup(request):
     if request.method == 'POST':
+        # 사용자의 값을 받아서 모델폼에 전달
         form = UserCreationForm(request.POST)
+        # 유효성 검사 - True일 경우
         if form.is_valid():
             form.save()
             return redirect('articles:index')

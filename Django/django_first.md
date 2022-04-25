@@ -94,7 +94,7 @@ LANGUAGE_CODE 부터 USE_TZ 까지의 5줄 설정 해주기
 
 
 
-# Application 생성 (MTV)
+# Application 생성
 
 > 프로젝트 생성 - settings.py 설정 - 앱 생성 - 앱 등록(settings)
 

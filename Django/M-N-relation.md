@@ -292,7 +292,10 @@ class Patient(models.Model):
 - 마이그레이션 및 shell_plus 실행 (related_name 때문에 초기화할 필요는 없음)
 
 - doctor1의 예약 환자 목록 확인 해보기 (역참조)
+
 - related_name 설정 후 기존의 _set manager는 더 이상 사용할 수 없음
+
+  -> 왜? 
 
  ```shell
  In [1]: doctor1 = Doctor.objects.get(pk=1)
