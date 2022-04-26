@@ -1,12 +1,10 @@
 [TOC]
 
-목차
+이전: 없음
 
-1. Intro
-2. 변수
-3. 데이터 타입
-4. 연산자
-5. 조건/반복
+현재: JS Basic-1 (기초, 변수, 연산자, 데이터 타입, 조건문, 반복문)
+
+다음: [JS Basic-2 (함수, 문자열, 배열, 객체, this, lodash)](./JS%20Basic-2.md))
 
 # 1. Intro
 
@@ -725,3 +723,10 @@ for (const fruit of fruits) {
 | for ... in | 반복문 | 객체 순회                | 블록 스코프 |
 | for ... of | 반복문 | 배열 등 Iterable 순회    | 블록 스코프 |
 
+
+
+이전: 없음
+
+현재: JS Basic-1 (기초, 변수, 연산자, 데이터 타입, 조건문, 반복문)
+
+다음: [JS Basic-2 (함수, 문자열, 배열, 객체, this, lodash)](./JS%20Basic-2.md))

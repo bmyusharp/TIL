@@ -109,3 +109,7 @@
 1. [JS Basic-1](./JavaScript/JS%20Basic-1.md)
 
    자바스크립트 입문을 위한 기본적인 정보, 변수의 선언과 데이터 타입, 연산자와 조건문, 반복문까지
+
+2. [JS Basic-2](./JavaScript/JS%20Basic-2.md)
+
+   JS Basic-1에 이어 함수와 문자열, 배열, 객체와 this, 마지막으로 lodash에 대하여
