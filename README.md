@@ -113,3 +113,5 @@
 2. [JS Basic-2](./JavaScript/JS%20Basic-2.md)
 
    JS Basic-1에 이어 함수와 문자열, 배열, 객체와 this, 마지막으로 lodash에 대하여
+
+3. [DOM & Event](./JavaScript/DOM%20&%20Event.md)
