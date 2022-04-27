@@ -697,7 +697,7 @@ for (const char of chars) {
 
 // forEach
 chars.forEach((char, idx) => {
-    console.log(idxm char)
+    console.log(idx, char)
 })
 
 chars.forEach(char => {
