@@ -4,7 +4,7 @@
 
 현재: JS Basic-1 (기초, 변수, 연산자, 데이터 타입, 조건문, 반복문)
 
-다음: [JS Basic-2 (함수, 문자열, 배열, 객체, this, lodash)](./JS%20Basic-2.md))
+다음: [JS Basic-2 (함수, 문자열, 배열, 객체, this, lodash)](./JS%20Basic-2.md)
 
 # 1. Intro
 
@@ -729,4 +729,4 @@ for (const fruit of fruits) {
 
 현재: JS Basic-1 (기초, 변수, 연산자, 데이터 타입, 조건문, 반복문)
 
-다음: [JS Basic-2 (함수, 문자열, 배열, 객체, this, lodash)](./JS%20Basic-2.md))
+다음: [JS Basic-2 (함수, 문자열, 배열, 객체, this, lodash)](./JS%20Basic-2.md)

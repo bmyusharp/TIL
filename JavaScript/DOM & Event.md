@@ -1,9 +1,10 @@
 [TOC]
 
-목차
+이전: [JS Basic-2 (함수, 문자열, 배열, 객체, this, lodash)](./JS%20Basic-2.md)
 
-- DOM
-- Event Listener
+현재: DOM & Event (브라우저 전쟁의 역사, DOM 조작법과 Event)
+
+다음: 없음
 
 # 0. History of JavaScript
 
@@ -227,7 +228,7 @@
 
 
 
-### 1.2.7. 속성 관련 메서드
+### 1.2.7. 속성 관련 메서드 (중요!)
 
 - Element**.setAttribute(name, value)**
   - 지정된 요소의 값을 설정
@@ -258,3 +259,244 @@
 
 # 2. Event
 
+## 2.1. Event (이벤트) 개념
+
+- 네트워크 활동이나 사용자와의 상호작용 같은 사건의 발생을 알리기 위한 객체
+- 이벤트 발생
+  - 마우스를 클릭하거나 키보드를 누르는 등 사용자 행동으로 발생할 수도 있음
+  - 특정 메서드를 호출(Element.click()) 하여 프로그래밍적으로도 만들어 낼 수 있음
+
+## 2.2. Event 기반 인터페이스
+
+- AnimationEvent, ClipboardEvent, DragEvent 등
+- UIEvent
+  - 간단한 사용자 인터페이스 이벤트
+  - Event의 상속을 받음
+  - MouseEvent, KeyBoardEvent, InputEvent, FocusEvent 등의 부모 객체 역할을 함
+
+## 2.3. Event의 역할
+
+> "~ 하면 ~ 한다."
+
+"클릭**하면,** 경고창**을 띄운다.**"
+
+"특정 이벤트가 발생**하면,** 할 일을 등록**한다.**"
+
+
+
+## 2.4. Event handler
+
+### 2.4.1. addEventListener()
+
+- EventTarget**.addEventListener()**
+
+  - 지정한 이벤트가 대상에 전달될 때마다 호출할 함수를 설정
+  - 이벤트를 지원하는 모든 객체 (Element, Document, Window 등) 를 대상으로 지정 가능
+
+- target**.addEventListener(type, listener**[, options]**)**
+
+  - **type**
+
+    - 반응 할 이벤트 유형 (대소문자 구분 문자열)
+
+  - **listener**
+
+    - 지정된 타입의 이벤트가 발생했을 때 알림을 받는 객체
+
+      EventListener 인터페이스 혹은 JS function 객체(콜백 함수) 여야 함
+
+#### 2.4.1.1. [DOM 관련 객체의 상속 구조 복습](#1.2.2. DOM 관련 객체의 상속 구조)
+
+- EventTarget
+  - Event Listener를 가질 수 있는 객체가 구현하는 DOM 인터페이스
+
+
+
+"**대상**에 **특정 이벤트**가 발생하면, **할 일**을 등록하자"
+
+**EventTarget**.addEventListener(**type**, **listener**)
+
+EventTarget -> 대상
+
+type -> 특정 이벤트
+
+listener -> 할 일
+
+![image-20220427172528729](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220427172528729.png)
+
+
+
+1. 
+
+```html
+<button onclick="alertMessage()">나를 눌러봐!</button>
+```
+
+```javascript
+const alertMessage = function () {
+    alert('메롱!!!')
+}
+```
+
+
+
+2. 
+
+```html
+<button id="my-button">나를 눌러봐!!</button>
+```
+
+```javascript
+const myButton = document.querySelector('#my-button')
+myButton.addEventListener('click', alertMessage)
+```
+
+
+
+3. 
+
+```html
+<p id="my-paragraph"></p>
+
+<form action="#">
+    <label for="my-text-input">내용을 입력하세요.</label>
+    <input id="my-text-input" type="text">
+</form>
+```
+
+```javascript
+const myTextInput = document.querySelector('#my-text-input')
+
+myTextInput.addEventListener('input', function (event) {
+    // console.log(event)
+    const myPtag = document.querySelector('#my-paragraph')
+    myPtag.innerText = event.target.value
+})
+```
+
+
+
+4.
+
+```html
+<h2>Change My Color</h2>
+<label for="change-color-input">원하는 색상을 영어로 입력하세요.</label>
+<input id="change-color-input"></input>
+<hr>
+```
+
+```javascript
+const colorInput = document.querySelector('#change-color-input')
+
+const changeColor = function (event) {
+    const h2Tag = document.querySelector('h2')
+    h2Tag.style.color = event.target.value
+}
+
+colorInput.addEventListener('input', changeColor)
+```
+
+![image-20220427173713428](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220427173713428.png)
+
+
+
+
+
+## 2.5. Event 취소
+
+- event**.preventDefault()**
+- 현재 이벤트의 기본 동작을 중단
+- HTML 요소의 기본 동작을 작동하지 않게 막음
+  - ex) a 태그의 기본 동작은 클릭 시 링크로 이동 / form 태그의 기본 동작은 form 데이터 전송
+- 이벤트를 취소할 수 있는 경우, 이벤트의 전파를 막지 않고 그 이벤트를 취소
+
+
+
+1. 
+
+```html
+<input type="chackbox" id="my-checkbox">
+```
+
+```javascript
+const checkBox = document.querySelector('#my-checkbox')
+
+checkBox.addEventListener('click', function (event) {
+    event.preventDefault()
+    console.log(event)
+})
+```
+
+![image-20220427174147937](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220427174147937.png)
+
+
+
+2. 
+
+```html
+<form action="/articles/" id="my-form">
+    <input type="text">
+    <input type="submit" value="제출!">
+</form>
+```
+
+```javascript
+const formTag = document.querySelector('#my-form')
+
+formTag.addEventListener('submit', function (event) {
+    console.log(event)
+    event.preventDefault()
+    event.target.reset()
+})
+```
+
+![image-20220427175327198](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220427175327198.png)
+
+
+
+3. 
+
+```html
+<a href="https://google.com/" target="_blank" id="my-link">GoToGoogle</a>
+```
+
+```javascript
+const aTag = document.querySelector('#my-link')
+
+aTag.addEventListener('click', function (event) {
+    console.log(event)
+    event.preventDefault()
+})
+```
+
+![image-20220427175445595](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220427175445595.png)
+
+
+
+4. 
+
+```javascript
+document.addEventListener('scroll', function (event) {
+    console.log(event)
+    event.preventDefault()
+})
+```
+
+![image-20220427203128092](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220427203128092.png)
+
+
+
+- 취소할 수 없는 이벤트도 존재
+  - 이벤트의 취소 가능 여부는 event.cancelable을 사용해 확인할 수 있음
+
+![image-20220427203229950](https://raw.githubusercontent.com/bmyusharp/TIL-assets/master/img/image-20220427203229950.png)
+
+
+
+# 같이 보기
+
+이전: [JS Basic-2 (함수, 문자열, 배열, 객체, this, lodash)](./JS%20Basic-2.md)
+
+현재: DOM & Event (브라우저 전쟁의 역사, DOM 조작법과 Event)
+
+다음: 없음

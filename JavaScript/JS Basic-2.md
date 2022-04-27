@@ -1,10 +1,10 @@
 [TOC]
 
-이전: [JS Basic-1 (기초, 변수, 연산자, 데이터 타입, 조건문, 반복문)](./JS%20Basic-1.md))
+이전: [JS Basic-1 (기초, 변수, 연산자, 데이터 타입, 조건문, 반복문)](./JS%20Basic-1.md)
 
 현재: JS Basic-2 (함수, 문자열, 배열, 객체, this, lodash)
 
-다음: 없음
+다음: [DOM & Event (브라우저 전쟁의 역사, DOM 조작법과 Event)](./DOM%20&%20Event.md)
 
 # 6. 함수
 
@@ -951,8 +951,8 @@ const obj = {
 
 # 같이 보기
 
-이전: [JS Basic-1 (기초, 변수, 연산자, 데이터 타입, 조건문, 반복문)](./JS%20Basic-1.md))
+이전: [JS Basic-1 (기초, 변수, 연산자, 데이터 타입, 조건문, 반복문)](./JS%20Basic-1.md)
 
 현재: JS Basic-2 (함수, 문자열, 배열, 객체, this, lodash)
 
-다음: 없음
+다음: [DOM & Event (브라우저 전쟁의 역사, DOM 조작법과 Event)](./DOM%20&%20Event.md)
