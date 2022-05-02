@@ -4,7 +4,7 @@
 
 현재: DOM & Event (브라우저 전쟁의 역사, DOM 조작법과 Event)
 
-다음: 없음
+다음: [AJAX (비동기, Promise, Axios)](./AJAX.md)
 
 # 0. History of JavaScript
 
@@ -499,4 +499,4 @@ document.addEventListener('scroll', function (event) {
 
 현재: DOM & Event (브라우저 전쟁의 역사, DOM 조작법과 Event)
 
-다음: 없음
+다음: [AJAX (비동기, Promise, Axios)](./AJAX.md)
